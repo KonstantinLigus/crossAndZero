@@ -1,9 +1,10 @@
 .container {
-  margin: 0 auto;
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   height: 300px;
   width: 300px;
+  margin: 0 auto;
+  flex-wrap: wrap;
   gap: 3px;
   background-color: black;
 }
@@ -14,4 +15,45 @@
   height: calc((100% - 3px * 2) / 3);
   flex-basis: calc((100% - 3px * 2) / 3);
   background-color: white;
+}
+.dashed {
+  position: absolute;
+  height: 3px;
+  width: 300px;
+  background-color: red;
+}
+.top {
+  top: 49px;
+}
+.middle {
+  top: 150px;
+}
+.bottom {
+  top: 251px;
+}
+.left {
+  transform: rotate(90deg);
+  transform-origin: center left;
+  left: 49px;
+}
+.center {
+  transform: rotate(90deg);
+  transform-origin: center left;
+  left: 150px;
+}
+.right {
+  transform: rotate(90deg);
+  transform-origin: center left;
+  left: 251px;
+}
+.left-to-right {
+  width: 424px;
+  transform: rotate(45deg);
+  transform-origin: center left;
+}
+.right-to-left {
+  width: 424px;
+  right: 1.5px;
+  transform: rotate(-45deg);
+  transform-origin: center right;
 }
