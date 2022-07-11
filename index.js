@@ -20,36 +20,42 @@ refs.container.addEventListener("click", onContainerClick);
 refs.resetBtn.addEventListener("click", onResetBtnClick);
 
 function onContainerClick(event) {
-  crossEntryAndUpdate(event);
-  zeroEntryAndUpdate(event);
+  crossOrZerroEntryAndUpdate(event);
   checkWinner();
-  counter += 1;
 }
 
 function onResetBtnClick() {
-  refs.container.innerHTML =
-    '<div id="a1" class="square">a1</div><div id="b1" class="square">b1</div><div id="c1" class="square">c1</div><div id="a2"class="square">a2</div><div id="b2" class="square">b2</div><div id="c2" class="square">c2</div><div id="a3" class="square">a3</div><div id="b3"class="square">b3</div><div id="c3" class="square">c3</div>';
+  resetHTML();
   resetData();
 }
 
-function crossEntryAndUpdate(event) {
-  if (counter % 2 === 0) {
-    if (event.target.classList.contains("square")) {
-      updateData(event, "cross");
-      event.target.innerHTML =
-        '<svg width="80" height="80"><use href="./symbol-defs.svg#icon-cross"></use></svg>';
-    }
+function crossOrZerroEntryAndUpdate(event) {
+  if (
+    counter % 2 === 0 &&
+    event.target.nodeName === "DIV" &&
+    event.target.firstChild.nodeName !== "svg"
+  ) {
+    console.log(counter);
+    updateData(event, "cross");
+    event.target.innerHTML =
+      '<svg width="80" height="80"><use href="./symbol-defs.svg#icon-cross"></use></svg>';
+    incrementCounter();
+  }
+  if (
+    counter % 2 === 1 &&
+    event.target.nodeName === "DIV" &&
+    event.target.firstChild.nodeName !== "svg"
+  ) {
+    console.log(counter);
+    updateData(event, "zero");
+    event.target.innerHTML =
+      '<svg width="80" height="80"><use href="./symbol-defs.svg#icon-circle"></use></svg>';
+    incrementCounter();
   }
 }
 
-function zeroEntryAndUpdate(event) {
-  if (counter % 2 === 1) {
-    if (event.target.classList.contains("square")) {
-      updateData(event, "zero");
-      event.target.innerHTML =
-        '<svg width="80" height="80"><use href="./symbol-defs.svg#icon-circle"></use></svg>';
-    }
-  }
+function incrementCounter() {
+  counter += 1;
 }
 
 function updateData(event, entry) {
@@ -70,6 +76,11 @@ function resetData() {
   };
 }
 
+function resetHTML() {
+  refs.container.innerHTML =
+    '<div id="a1" class="item"><span class="none">a1</span></div><div id="b1" class="item"><span class="none">b1</span></div><div id="c1" class="item"><span class="none">c1</span></div><div id="a2" class="item"><span class="none">a2</span></div><div id="b2" class="item"><span class="none">b2</span></div><div id="c2" class="item"><span class="none">c2</span></div><div id="a3" class="item"><span class="none">a3</span></div><div id="b3" class="item"><span class="none">b3</span></div><div id="c3" class="item"><span class="none">c3</span></div>';
+}
+
 function checkWinner() {
   const { a1, b1, c1, a2, b2, c2, a3, b3, c3 } = data;
   if (
@@ -80,6 +91,7 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed top"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
   if (
     (a2 === "cross" && b2 === "cross" && c2 === "cross") ||
@@ -89,6 +101,7 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed middle"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
   if (
     (a3 === "cross" && b3 === "cross" && c3 === "cross") ||
@@ -98,6 +111,7 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed bottom"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
   if (
     (a1 === "cross" && a2 === "cross" && a3 === "cross") ||
@@ -107,6 +121,7 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed left"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
   if (
     (b1 === "cross" && b2 === "cross" && b3 === "cross") ||
@@ -116,6 +131,7 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed center"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
   if (
     (c1 === "cross" && c2 === "cross" && c3 === "cross") ||
@@ -125,6 +141,7 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed right"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
   if (
     (a1 === "cross" && b2 === "cross" && c3 === "cross") ||
@@ -134,6 +151,7 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed left-to-right"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
   if (
     (c1 === "cross" && b2 === "cross" && a3 === "cross") ||
@@ -143,5 +161,6 @@ function checkWinner() {
       "beforeend",
       '<div class="dashed right-to-left"></div>'
     );
+    refs.container.removeEventListener("click", onContainerClick);
   }
 }

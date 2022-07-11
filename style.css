@@ -8,13 +8,16 @@
   gap: 3px;
   background-color: black;
 }
-.square {
+.item {
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc((100% - 3px * 2) / 3);
   flex-basis: calc((100% - 3px * 2) / 3);
   background-color: white;
+}
+.none {
+  display: none;
 }
 .dashed {
   position: absolute;
